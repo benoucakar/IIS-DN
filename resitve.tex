@@ -1,8 +1,7 @@
 \documentclass[a4paper,11pt]{article}
-\usepackage[slovene]{babel}
+%\usepackage[slovene]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-%\usepackage{quiver}
 \usepackage{lmodern}
 \usepackage{amsmath, amsthm, amsfonts, amssymb} 
 \usepackage{graphicx}
@@ -16,28 +15,20 @@
 \newcommand{\Z}{\mathbb Z}
 \newcommand{\C}{\mathbb C}
 \newcommand{\Q}{\mathbb Q}
-\newcommand{\z}{\bar{z}}
-\newcommand{\PR}{\mathbb P ^1}
 \newcommand{\D}{\mathbb D}
 
 \newcommand{\set}[1]{\left\{#1\right\}} % množica
 \newcommand{\abs}[1]{\left|#1\right|} % absolutna vrednost
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert} % norma
 
-\DeclareMathOperator{\Crit}{Crit}
-\DeclareMathOperator{\CV}{CV}
-\DeclareMathOperator{\im}{im}
-\DeclareMathOperator{\Sym}{Sym}
-\DeclareMathOperator{\sgn}{sgn}
-\DeclareMathOperator{\re}{Re}
-\DeclareMathOperator{\ima}{Im}
-\DeclareMathOperator{\id}{id}
-\DeclareMathOperator{\st}{st}
-\DeclareMathOperator{\Deck}{Deck}
-\DeclareMathOperator{\cl}{cl}
-\DeclareMathOperator{\arcosh}{arcosh}
-\DeclareMathOperator{\dist}{dist}
-\DeclareMathOperator{\Int}{int}
+\newcommand{\re}{\mathrm{Re}}
+\newcommand{\ima}{\mathrm{Im}}
+\newcommand{\res}{\mathrm{R}}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\im}{\mathrm{ran}}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}
 
 
 
@@ -55,11 +46,125 @@ Solutions for exercise sheet 7}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Exercise 1}
+\begin{exercise}[Characterization of m-accretivity]
+    Provide a proof of Lemma 7.11.
+\end{exercise}
 
-\section*{Exercise 3}
+\begin{proof}
+    $(\Longrightarrow)$ For $\lambda \in \C$ such that $\re(\lambda)>0$ it follows by assumption 
+    that the operator $(\lambda + L)^{-1}$ is bounded. 
+    Thus we have  
+    \begin{equation}\label{eq:1}
+        \norm{(\lambda + L)u}^2 \ge \re(\lambda)^2 \norm{u}^2,
+    \end{equation}
+    for all $u \in \dom(L)$.
 
-\section*{Exercise 4}
+    For the first statement pick $\lambda > 0$ and $u \in \dom(L)$. Using equation \eqref{eq:1} and the identity 
+    \[\norm{(\lambda + L)u}^2 =  \left\langle (\lambda + L)u, (\lambda + L)u \right\rangle = \norm{Lu}^2 + 2 \re(\lambda \left\langle Lu,u\right\rangle) + \abs{\lambda}^2 \norm{u}^2\]
+    we get 
+    \begin{align*}
+    \norm{Lu}^2 + 2\re(\lambda\langle Lu, u\rangle) + \abs{\lambda}^2 \norm{u}^2 & \ge \re(\lambda)^2 \norm{u}^2 \\
+    \norm{Lu}^2 + 2 \lambda\re(\langle Lu, u\rangle) + \lambda^2 \norm{u}^2 & \ge \lambda^2 \norm{u}^2 \\
+    \norm{Lu}^2 + 2 \lambda\re(\langle Lu, u\rangle)  & \ge 0.
+    \end{align*}
+    Since $\lambda$ was arbitrary, it follows that $\re(\langle Lu, u\rangle) \ge 0$ for all $u \in \dom(L)$.
+    
+    For the second statement pick any $\lambda > 0$. 
+    Since $L$ is m-accretive, $-\lambda$ will be in the resolvent set of $L$ and thus the operator $(\lambda + L)^{-1}$ will be bounded, which means that 
+    \[H=\dom((\lambda + L)^{-1})=\im(\lambda + L).\]
 
+    $(\Longleftarrow)$ Using the Cauchy-Schwarz inequality we get 
+    \begin{align}
+        \norm{(\lambda+L)u}\norm{u}
+        &\ge \abs{\langle(\lambda+L)u,u\rangle} \nonumber \\
+        &\ge \re(\langle(\lambda+L)u,u\rangle) \nonumber \\
+        &=\re(\lambda)\norm{u}^2+\re(\langle Lu,u\rangle) \nonumber \\
+        &\ge \re(\lambda)\norm{u}^2, \label{eq:2}
+    \end{align}
+    for every $u\in\dom(L)$ and $\lambda \in \C$. 
+    Here we used the fact that $\re(\langle Lu,u\rangle)\ge 0$. 
+    By assumption there exists some $\lambda_0>0$ such that $\im(\lambda_0+L)$ is dense in $H$. 
+    Because of equation (\ref{eq:2}) the operator $(\lambda_0+L)^{-1}$ is continuous on $\im(\lambda_0+L)$ and thus its domain is closed.
+    This implies that $(\lambda_0+L)^{-1}$ is a bounded operator and that $-\lambda_0\in \rho(L)$. 
+    From (\ref{eq:2}) it also follows that for any $-\nu \in \rho(L)$ we have
+    \begin{equation}\label{eq:3}
+        \norm{\res(-\nu,L)} = \norm{(\nu+L)^{-1}} \le \frac{1}{\re(\nu)}.
+    \end{equation}
+    From Proposition 1.15 and $\re(-\lambda_0) \le \norm{\res(-\nu,L)}^{-1}$ it follows that for every $\mu \in \C$ 
+    if $|\lambda_0-\mu|< \re(\lambda_0)$ then $-\mu \in \rho(L)$.
+    In particular, since $\lambda_0 > 0$ and 
+    \[\abs{\lambda_0 - \frac{1}{2} \lambda_0} = \frac{1}{2}\lambda_0 < \lambda_0 = \re(\lambda_0)\]
+    it follows $-\frac{3}{2}\lambda_0\in \rho(L)$. 
+    By equation \eqref{eq:3} applied with $\nu = \frac{3}{2}\lambda_0$ we see that all complex numbers whose distance from $-\frac{3}{2}\lambda_0$ is at most $\frac{3}{2}\re(\lambda_0)$ are in the resolvent set, in particular $-\frac{9}{4}\lambda_0$.
+    We continue this reasoning inductively and find that for any $n \in \N$ the complex numbers whose distance from $-\left(\frac{3}{2}\right)^n\lambda_0$ is at most $\left(\frac{3}{2}\right)^n\re(\lambda_0)$ are in the resolvent set.
+    In particular this shows that all negative real numbers are in the resolvent set.
+
+    Now let $\lambda \in \C$ be a complex number such that $\re(\lambda) > 0$. We have shown that $-\re(\lambda) \in \rho(L)$.
+    From equation \eqref{eq:3} it follows that the set 
+    \[\set{z\in\C\mid \re(z)=-\re(\lambda), |\ima(z)|<\re(\lambda)}\]
+    is contained in $\rho(L)$.
+    Using the same reasoning as above we obtain, via Proposition 1.15, that the set 
+    \[\set{z\in\C\mid \re(z)=-\re(\lambda), |\ima(z)|< \frac{3}{2}\re(\lambda)}\]
+    is contained in $\rho(L)$.
+    Again we continue inductively and for any $n \in \N$ find that the set 
+    \[\set{z\in\C\mid \re(z)=-\re(\lambda), |\ima(z)|< \left(\frac{3}{2}\right)^n \re(\lambda)}\]
+    is contained in $\rho(L)$.
+    In particular any complex number $z$ with $\re(z) = -\re(\lambda)$ is in the resolvent set.
+    Applying the equation \eqref{eq:3} completes the proof.
+
+    In the case where $L$ is bounded, the spectrum of $L$ will be compact. Thus for large enough $\lambda > 0$ the number $-\lambda$ will be in the resolvent set of $L$ which implies 
+    \[\im(L+\lambda) = H.\]
+\end{proof}
+
+\begin{exercise}[m-accretive fractional powers]
+    Let $L$ be an m-accretive operator in $H$ and let $\alpha \in (0,1)$. Prove $L^\alpha$ is m-accretive- 
+\end{exercise}
+
+\begin{proof}
+    We use Lemma 7.11 to prove the statement.
+    By Proposition 6.18 we have the representation 
+    \[L^\alpha u=\frac{\sin(\alpha\pi)}{\pi}\int_0^\infty t^{\alpha-1}L(t+L)^{-1}u\, dt\]
+    and thus
+    \[\re\left(\langle L^\alpha u,u\rangle\right) = \re\left(\left\langle \frac{\sin(\alpha\pi)}{\pi}\int_0^\infty t^{\alpha-1}L(t+L)^{-1}u\, dt,u\right\rangle\right).\]
+    Using Proposition A.13 we can calculate
+    \begin{align*}
+        &\re\left(\left\langle \frac{\sin(\alpha\pi)}{\pi}\int_0^\infty t^{\alpha-1}L(t+L)^{-1}u\, dt,u\right\rangle\right) \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \re\left(\left\langle \int_0^\infty t^{\alpha-1}L(t+L)^{-1}u\, dt,u\right\rangle\right) \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \re\left(\int_0^\infty t^{\alpha-1}\left\langle L(t+L)^{-1}u ,u\right\rangle \,dt\right) \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \int_0^\infty t^{\alpha-1}\re\left(\left\langle L(t+L)^{-1}u ,u\right\rangle\right)\,dt.
+    \end{align*}
+    Since $(t+L)^{-1}$ is a bijection, we can write $u=(t+L)v$. Thus we get
+    \begin{align*}
+        &\frac{\sin(\alpha\pi)}{\pi} \int_0^\infty t^{\alpha-1}\re\left(\left\langle L(t+L)^{-1}u ,u\right\rangle\right)\,dt \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \int_0^\infty t^{\alpha-1}\re\left(\left\langle Lv ,(t+L)v\right\rangle\right)\,dt \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \int_0^\infty t^{\alpha-1}\re\left(t\left\langle Lv, v\right\rangle + \norm{Lv}^2\right)\,dt \\
+        &= \frac{\sin(\alpha\pi)}{\pi} \int_0^\infty t^{\alpha-1}\left(t \re\left(\left\langle Lv, v\right\rangle\right) + \norm{Lv}^2\right) \,dt.
+    \end{align*}
+Since $L$ is m-accretive the last line is positive, which implies that $\re(\langle L^\alpha u,u\rangle) \ge0$. 
+
+It remains to show that there exists some $\lambda > 0$ such that $\im(\lambda+L^\alpha)$ is dense in $H$. 
+But this follows from exercise 6.5 which states that $L^\alpha$ is sectorial of angle less that $\pi$.
+This implies that $-1\in \rho(L^\alpha)$ and thus $L^\alpha+1$ is invertible and so $\im(L^\alpha+1)=H$.
+So we may pick $\lambda = 1$ to complete the proof. 
+\end{proof}
+
+\begin{exercise}
+    Fill in the details left out in the discussion of the $H^\infty$-calculus for multiplication operators in example 7.7. 
+\end{exercise}
+
+\begin{exercise}[An automatic bound for $H^{\infty}$-calculus.]
+    Let $L$ be an injective sectorial operator in $H$. Let $\phi \in (\phi_L,\pi)$ and suppose that we have $f(L) \in \mathcal{L}(H)$ for every $f \in H^\infty(S_\phi)$.
+    Prove that these is a constant $C \ge 0$ such that 
+    \[\norm{f(L)}_{\mathcal{L}(H)} \le C \norm{f}_{\infty, \phi}\]
+    holds for every such $f$.
+\end{exercise}
+
+\begin{proof}
+    
+\end{proof}
+
+\begin{exercise}(The injective part)
+    Dolgo navodilo.
+\end{exercise}
 
 \end{document}
